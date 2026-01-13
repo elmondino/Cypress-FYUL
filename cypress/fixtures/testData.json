@@ -1,0 +1,55 @@
+{
+  "site": {
+    "name": "FYUL",
+    "baseUrl": "https://www.fyul.com"
+  },
+  "brands": [
+    {
+      "name": "Printify",
+      "urlPattern": "printify\\.com",
+      "description": "Print on demand platform"
+    },
+    {
+      "name": "Printful",
+      "urlPattern": "printful\\.com",
+      "description": "Print on demand and fulfillment"
+    },
+    {
+      "name": "Snow Commerce",
+      "urlPattern": "snowcommerce",
+      "description": "E-commerce solutions"
+    }
+  ],
+  "pages": {
+    "home": {
+      "path": "/",
+      "title": "FYUL"
+    },
+    "about": {
+      "path": "/about",
+      "title": "About"
+    },
+    "leadership": {
+      "path": "/leadership",
+      "title": "Leadership"
+    },
+    "privacy": {
+      "path": "/privacy-policy",
+      "title": "Privacy"
+    }
+  },
+  "navigation": {
+    "mainLinks": ["About", "Leadership", "Careers", "Privacy Policy"],
+    "footerLinks": ["About", "Leadership", "Careers", "Privacy Policy"]
+  },
+  "performance": {
+    "maxLoadTime": 5000,
+    "maxDomContentLoaded": 3000,
+    "maxFirstPaint": 2000
+  },
+  "viewports": {
+    "mobile": { "width": 375, "height": 667 },
+    "tablet": { "width": 768, "height": 1024 },
+    "desktop": { "width": 1920, "height": 1080 }
+  }
+}
