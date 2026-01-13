@@ -57,7 +57,7 @@ stages:
           - script: npm ci
             displayName: 'Install dependencies'
 
-          - script: npx cypress run --browser chrome
+          - script: npx cypress run --browser chrome --config-file cypress.config.ts
             displayName: 'Run Chrome tests'
             continueOnError: true
 
@@ -93,7 +93,7 @@ stages:
           - script: npm ci
             displayName: 'Install dependencies'
 
-          - script: npx cypress run --browser firefox
+          - script: npx cypress run --browser firefox --config-file cypress.config.ts
             displayName: 'Run Firefox tests'
             continueOnError: true
 

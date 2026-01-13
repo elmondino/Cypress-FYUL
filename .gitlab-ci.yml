@@ -31,17 +31,17 @@ cache:
 test:chrome:
   <<: *test_definition
   script:
-    - npx cypress run --browser chrome --record --parallel
+    - npx cypress run --browser chrome --config-file cypress.config.ts
 
 test:firefox:
   <<: *test_definition
   script:
-    - npx cypress run --browser firefox --record --parallel
+    - npx cypress run --browser firefox --config-file cypress.config.ts
 
 test:edge:
   <<: *test_definition
   script:
-    - npx cypress run --browser edge --record --parallel
+    - npx cypress run --browser edge --config-file cypress.config.ts
 
 pages:
   stage: report
