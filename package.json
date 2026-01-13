@@ -1,0 +1,68 @@
+{
+  "name": "fyul-cypress-tests",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Cypress test suite for FYUL.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:edge": "cypress run --browser edge",
+    "test:headed": "cypress run --headed",
+    "test:headless": "cypress run --headless",
+    "test:mobile": "cypress run --config viewportWidth=375,viewportHeight=667",
+    "test:tablet": "cypress run --config viewportWidth=768,viewportHeight=1024",
+    "test:desktop": "cypress run --config viewportWidth=1920,viewportHeight=1080",
+    "test:home": "cypress run --spec 'cypress/e2e/home/**/*.cy.js'",
+    "test:about": "cypress run --spec 'cypress/e2e/about/**/*.cy.js'",
+    "test:leadership": "cypress run --spec 'cypress/e2e/leadership/**/*.cy.js'",
+    "test:privacy": "cypress run --spec 'cypress/e2e/privacy/**/*.cy.js'",
+    "test:integration": "cypress run --spec 'cypress/e2e/integration/**/*.cy.js'",
+    "test:security": "cypress run --spec 'cypress/e2e/security/**/*.cy.js'",
+    "test:parallel": "cypress run --record --parallel",
+    "open": "cypress open",
+    "open:chrome": "cypress open --browser chrome",
+    "open:firefox": "cypress open --browser firefox",
+    "open:edge": "cypress open --browser edge",
+    "clean": "rimraf cypress/screenshots cypress/videos cypress/reports",
+    "clean:reports": "rimraf cypress/reports",
+    "report": "cypress run --reporter cypress-mochawesome-reporter",
+    "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json",
+    "report:generate": "marge cypress/reports/merged-report.json --reportDir cypress/reports --inline",
+    "lint": "eslint cypress/**/*.js",
+    "lint:fix": "eslint cypress/**/*.js --fix",
+    "pretest": "npm run clean",
+    "ci": "npm run clean && npm run test -- --record",
+    "ci:chrome": "npm run test:chrome -- --record",
+    "ci:firefox": "npm run test:firefox -- --record",
+    "ci:edge": "npm run test:edge -- --record"
+  },
+  "keywords": [
+    "cypress",
+    "e2e",
+    "testing",
+    "automation",
+    "qa",
+    "fyul"
+  ],
+  "author": "QA Team",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^15.8.2",
+    "cypress-mochawesome-reporter": "^3.8.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-cypress": "^2.15.2",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^4.4.1",
+    "mochawesome-report-generator": "^6.3.2",
+    "rimraf": "^5.0.10"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/fyul-cypress-tests.git"
+  }
+}

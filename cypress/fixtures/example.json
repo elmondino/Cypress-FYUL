@@ -1,0 +1,40 @@
+{
+  "urls": {
+    "base": "https://www.fyul.com",
+    "home": "/",
+    "about": "/about",
+    "leadership": "/leadership",
+    "privacyPolicy": "/privacy-policy"
+  },
+  "brands": [
+    {
+      "name": "Printify",
+      "url": "https://printify.com"
+    },
+    {
+      "name": "Printful",
+      "url": "https://www.printful.com"
+    },
+    {
+      "name": "Snow Commerce",
+      "url": "https://www.snowcommerce.com"
+    }
+  ],
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 375,
+      "height": 667
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "desktop",
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}
