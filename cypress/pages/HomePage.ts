@@ -2,16 +2,13 @@ import { BasePage } from './BasePage';
 
 /**
  * Selectors interface for type safety
- * Using data-testid as primary, with fallbacks for sites without them
  */
 interface HomePageSelectors {
   hero: string;
   heroHeading: string;
   navigation: string;
   footer: string;
-  brandsSection: string;
-  brandCards: string;
-  careersSection: string;
+  brandLinks: string;
   careersLink: string;
   leadershipLink: string;
   aboutLink: string;
@@ -27,20 +24,18 @@ export class HomePage extends BasePage {
   protected readonly pageTitle = /FYUL/i;
 
   /**
-   * Selectors using data-testid first, with semantic fallbacks
-   * Note: If site adds data-testid attributes, update these selectors
+   * Selectors using data-testid first, with robust fallbacks
+   * Avoids :has() selector due to limited browser support
    */
   private readonly selectors: HomePageSelectors = {
-    hero: '[data-testid="hero"], section:first-of-type, main > *:first-child',
-    heroHeading: '[data-testid="hero-heading"], h1, [role="heading"][aria-level="1"]',
-    navigation: '[data-testid="navigation"], nav, header, [role="navigation"]',
+    hero: '[data-testid="hero"], main > section:first-child, .hero, #hero',
+    heroHeading: '[data-testid="hero-heading"], h1',
+    navigation: '[data-testid="navigation"], nav, header [role="navigation"], header',
     footer: '[data-testid="footer"], footer, [role="contentinfo"]',
-    brandsSection: '[data-testid="brands-section"], section:has(a[href*="printify"])',
-    brandCards: '[data-testid="brand-card"], a[href*="printify.com"], a[href*="printful.com"], a[href*="snowcommerce"]',
-    careersSection: '[data-testid="careers-section"], section:has(a[href*="careers"])',
-    careersLink: '[data-testid="careers-link"], a[href*="careers"]',
-    leadershipLink: '[data-testid="leadership-link"], a[href*="leadership"]',
-    aboutLink: '[data-testid="about-link"], a[href*="about"]',
+    brandLinks: '[data-testid="brand-link"], a[href*="printify.com"], a[href*="printful.com"], a[href*="snowcommerce"]',
+    careersLink: '[data-testid="careers-link"], a[href*="careers"], a[href*="jobs"]',
+    leadershipLink: '[data-testid="leadership-link"], a[href*="leadership"], a[href*="team"]',
+    aboutLink: '[data-testid="about-link"], a[href*="/about"]',
     privacyLink: '[data-testid="privacy-link"], a[href*="privacy"]',
   };
 
@@ -64,12 +59,8 @@ export class HomePage extends BasePage {
     return cy.get(this.selectors.footer).first();
   }
 
-  private get brandsSection() {
-    return cy.get(this.selectors.brandsSection).first();
-  }
-
-  private get brandCards() {
-    return cy.get(this.selectors.brandCards);
+  private get brandLinks() {
+    return cy.get(this.selectors.brandLinks);
   }
 
   private get careersLink() {
@@ -109,18 +100,19 @@ export class HomePage extends BasePage {
     return this;
   }
 
-  verifyBrandsSection(): this {
-    this.brandCards.should('have.length.greaterThan', 0);
-    return this;
-  }
-
-  verifyBrandLinks(brands: { name: string; urlPattern: RegExp }[]): this {
-    brands.forEach(({ name, urlPattern }) => {
-      cy.contains('a', name)
-        .should('be.visible')
-        .and('have.attr', 'href')
-        .and('match', urlPattern);
-    });
+  verifyBrandLinks(brands?: { name: string; urlPattern: RegExp }[]): this {
+    if (brands) {
+      // Data-driven approach from fixtures
+      brands.forEach(({ name, urlPattern }) => {
+        cy.contains('a', name)
+          .should('be.visible')
+          .and('have.attr', 'href')
+          .and('match', urlPattern);
+      });
+    } else {
+      // Simple check that brand links exist
+      this.brandLinks.should('have.length.greaterThan', 0);
+    }
     return this;
   }
 
@@ -172,7 +164,7 @@ export class HomePage extends BasePage {
   verifyAllSections(): this {
     this.verifyHeroSection();
     this.verifyNavigation();
-    this.verifyBrandsSection();
+    this.verifyBrandLinks();
     this.verifyFooter();
     return this;
   }

@@ -115,50 +115,36 @@ Cypress.Commands.add('validateSEO', () => {
     }
   });
 
-  // Heading structure - should have exactly one h1
+  // Heading structure - should have at least one h1
   cy.get('h1').should('have.length.gte', 1);
 });
 
 // =====================
-// Accessibility Commands
+// Accessibility Commands (cypress-axe)
 // =====================
 
+// Import and register cypress-axe commands
+import 'cypress-axe';
+
 /**
- * Basic accessibility checks without external dependencies
+ * Configure axe for better error reporting
  */
-Cypress.Commands.add('checkAccessibility', () => {
-  // Images should have alt text
-  cy.get('img').each(($img) => {
-    cy.wrap($img).should('have.attr', 'alt');
+const logA11yViolations = (violations: any[]) => {
+  if (violations.length === 0) {
+    cy.log('✅ No accessibility violations found');
+    return;
+  }
+
+  cy.task('log', `\n${violations.length} accessibility violation(s) detected:\n`);
+  
+  violations.forEach((violation, index) => {
+    const nodes = violation.nodes.map((node: any) => node.target.join(', ')).join('\n  - ');
+    cy.task('log', `
+${index + 1}. ${violation.id} (${violation.impact})
+   Description: ${violation.description}
+   Help: ${violation.helpUrl}
+   Elements:
+  - ${nodes}
+`);
   });
-
-  // Links should have discernible text
-  cy.get('a').each(($link) => {
-    const hasText = $link.text().trim().length > 0;
-    const hasAriaLabel = $link.attr('aria-label');
-    const hasTitle = $link.attr('title');
-    const hasImage = $link.find('img[alt]').length > 0;
-
-    expect(
-      hasText || hasAriaLabel || hasTitle || hasImage,
-      `Link should have accessible name: ${$link.attr('href')}`
-    ).to.be.true;
-  });
-
-  // Form inputs should have labels
-  cy.get('input:not([type="hidden"]), select, textarea').each(($input) => {
-    const id = $input.attr('id');
-    const ariaLabel = $input.attr('aria-label');
-    const ariaLabelledBy = $input.attr('aria-labelledby');
-    const placeholder = $input.attr('placeholder');
-
-    if (id) {
-      cy.get(`label[for="${id}"]`).should('exist');
-    } else {
-      expect(
-        ariaLabel || ariaLabelledBy || placeholder,
-        'Input should have accessible label'
-      ).to.exist;
-    }
-  });
-});
+};

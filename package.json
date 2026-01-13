@@ -17,8 +17,10 @@
     "test:leadership": "cypress run --spec 'cypress/e2e/leadership/**/*.cy.ts'",
     "test:privacy": "cypress run --spec 'cypress/e2e/privacy/**/*.cy.ts'",
     "test:responsive": "cypress run --spec 'cypress/e2e/cross-browser/**/*.cy.ts'",
-    "test:staging": "CYPRESS_ENV=staging cypress run",
-    "test:dev": "CYPRESS_ENV=development cypress run",
+    "test:visual": "cypress run --spec 'cypress/e2e/visual/**/*.cy.ts'",
+    "test:a11y": "cypress run --env a11y=true",
+    "test:staging": "cross-env CYPRESS_ENV=staging cypress run",
+    "test:dev": "cross-env CYPRESS_ENV=development cypress run",
     "open": "cypress open --config-file cypress.config.ts",
     "open:chrome": "cypress open --browser chrome",
     "open:firefox": "cypress open --browser firefox",
@@ -31,7 +33,8 @@
     "pretest": "npm run clean",
     "ci": "npm run clean && npm run test -- --record",
     "ci:chrome": "npm run test:chrome -- --record",
-    "ci:firefox": "npm run test:firefox -- --record"
+    "ci:firefox": "npm run test:firefox -- --record",
+    "percy": "percy exec -- cypress run --spec 'cypress/e2e/visual/**/*.cy.ts'"
   },
   "keywords": [
     "cypress",
@@ -44,8 +47,13 @@
   "author": "QA Team",
   "license": "MIT",
   "devDependencies": {
+    "@percy/cli": "^1.31.7",
+    "@percy/cypress": "^3.1.7",
     "@types/node": "^25.0.8",
+    "axe-core": "^4.11.1",
+    "cross-env": "^10.1.0",
     "cypress": "^15.8.2",
+    "cypress-axe": "^1.7.0",
     "cypress-mochawesome-reporter": "^3.8.4",
     "eslint": "^8.57.1",
     "eslint-plugin-cypress": "^2.15.2",

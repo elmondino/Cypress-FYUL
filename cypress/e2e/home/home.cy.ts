@@ -48,7 +48,7 @@ describe('Home Page', () => {
 
   describe('Brands Section', () => {
     it('should display brand cards', () => {
-      homePage.verifyBrandsSection();
+      homePage.verifyBrandLinks();
     });
 
     it('should have valid brand links', () => {
@@ -95,6 +95,7 @@ describe('Home Page - Accessibility', () => {
   });
 
   it('should pass basic accessibility checks', () => {
-    cy.checkAccessibility();
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });

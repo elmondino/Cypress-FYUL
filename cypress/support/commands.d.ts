@@ -36,9 +36,22 @@ declare global {
       validateSEO(): Chainable<void>;
 
       /**
-       * Check basic accessibility
+       * Inject axe-core for accessibility testing
        */
-      checkAccessibility(): Chainable<void>;
+      injectAxe(): Chainable<void>;
+
+      /**
+       * Run axe accessibility checks
+       * @param context - Optional context/selector to check
+       * @param options - Optional axe options
+       */
+      checkA11y(
+        context?: string | Node | null,
+        options?: {
+          runOnly?: string[];
+          rules?: Record<string, { enabled: boolean }>;
+        }
+      ): Chainable<void>;
     }
   }
 

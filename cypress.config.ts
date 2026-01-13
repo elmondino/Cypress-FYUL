@@ -70,8 +70,10 @@ export default defineConfig({
     },
     
     setupNodeEvents(on, config) {
-      // Mochawesome reporter
-      require('cypress-mochawesome-reporter/plugin')(on);
+      // Mochawesome reporter - using dynamic import for ESM compatibility
+      import('cypress-mochawesome-reporter/plugin').then((module) => {
+        module.default(on);
+      });
       
       // Browser launch options
       on('before:browser:launch', (browser, launchOptions) => {
