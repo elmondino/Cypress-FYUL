@@ -44,14 +44,36 @@ declare global {
        * Run axe accessibility checks
        * @param context - Optional context/selector to check
        * @param options - Optional axe options
+       * @param violationCallback - Optional callback for violations
+       * @param skipFailures - Optional flag to skip failures
        */
       checkA11y(
         context?: string | Node | null,
         options?: {
           runOnly?: string[];
           rules?: Record<string, { enabled: boolean }>;
-        }
+        },
+        violationCallback?: (violations: unknown[]) => void,
+        skipFailures?: boolean
       ): Chainable<void>;
+
+      /**
+       * Take a visual snapshot with Percy
+       * @param name - Name of the snapshot
+       * @param options - Percy options
+       */
+      visualSnapshot(name: string, options?: PercyOptions): Chainable<void>;
+
+      /**
+       * Take visual snapshots at multiple viewports
+       * @param name - Base name for snapshots
+       */
+      visualSnapshotResponsive(name: string): Chainable<void>;
+
+      /**
+       * Setup default network intercepts
+       */
+      setupIntercepts(): Chainable<void>;
     }
   }
 
@@ -59,6 +81,13 @@ declare global {
     maxLoadTime?: number;
     maxDomContentLoaded?: number;
     maxFirstPaint?: number;
+  }
+
+  interface PercyOptions {
+    widths?: number[];
+    minHeight?: number;
+    percyCSS?: string;
+    scope?: string;
   }
 }
 

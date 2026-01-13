@@ -6,31 +6,12 @@
 // Import Percy
 import '@percy/cypress';
 
-// Add custom visual testing commands
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Take a Percy snapshot for visual regression testing
-       * @param name - Name of the snapshot
-       * @param options - Percy options
-       */
-      visualSnapshot(name: string, options?: PercyOptions): Chainable<void>;
-      
-      /**
-       * Take visual snapshots at multiple viewports
-       * @param name - Base name for snapshots
-       */
-      visualSnapshotResponsive(name: string): Chainable<void>;
-    }
-  }
-  
-  interface PercyOptions {
-    widths?: number[];
-    minHeight?: number;
-    percyCSS?: string;
-    scope?: string;
-  }
+// Visual testing options interface
+interface PercyOptions {
+  widths?: number[];
+  minHeight?: number;
+  percyCSS?: string;
+  scope?: string;
 }
 
 /**

@@ -3,6 +3,7 @@ import testData from '../../fixtures/testData.json';
 /**
  * Responsive Design Tests
  * Tests across mobile, tablet, and desktop viewports
+ * Uses content-based selectors as site does not use semantic HTML
  */
 describe('Responsive Design', () => {
   const viewports = testData.viewports;
@@ -15,16 +16,20 @@ describe('Responsive Design', () => {
         cy.waitForPageReady();
       });
 
-      it('should display navigation', () => {
-        cy.get('nav, header, [role="navigation"]').should('exist');
+      it('should display navigation links', () => {
+        // Site uses link-based navigation, not semantic <nav>
+        cy.contains('a', 'About').should('exist');
+        cy.contains('a', 'Leadership').should('exist');
       });
 
       it('should display main content', () => {
-        cy.get('main, [role="main"], body').should('be.visible');
+        cy.get('body').should('be.visible');
+        cy.contains('FYUL').should('be.visible');
       });
 
-      it('should display footer', () => {
-        cy.get('footer, [role="contentinfo"]').should('exist');
+      it('should display footer links', () => {
+        // Site uses links in footer area, not semantic <footer>
+        cy.contains('a', 'Privacy Policy').should('exist');
       });
     });
   });

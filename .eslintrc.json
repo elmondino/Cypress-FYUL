@@ -22,7 +22,8 @@
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
     "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/triple-slash-reference": "off"
   },
-  "ignorePatterns": ["node_modules/", "cypress/reports/", "cypress/videos/", "cypress/screenshots/"]
+  "ignorePatterns": ["node_modules/", "cypress/reports/", "cypress/videos/", "cypress/screenshots/", "**/*.d.ts"]
 }

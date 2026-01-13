@@ -104,6 +104,8 @@ export abstract class BasePage {
    * Take a screenshot with context
    */
   screenshot(name: string): this {
+    // Ensure page is visible before taking screenshot
+    cy.get('body').should('be.visible');
     cy.screenshot(`${this.constructor.name}-${name}`);
     return this;
   }

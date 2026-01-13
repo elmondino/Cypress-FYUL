@@ -2,46 +2,49 @@ import { BasePage } from './BasePage';
 
 /**
  * PrivacyPolicyPage - Page Object for FYUL.com privacy policy page
+ * Uses content-based selectors as site does not use semantic HTML
  */
 export class PrivacyPolicyPage extends BasePage {
   protected readonly path = '/privacy-policy';
   protected readonly pageTitle = /Privacy|FYUL/i;
 
-  private readonly selectors = {
-    heading: '[data-testid="privacy-heading"], h1',
-    content: '[data-testid="privacy-content"], main, article',
-    sections: '[data-testid="privacy-section"], section, h2',
-  };
-
-  private get heading() {
-    return cy.get(this.selectors.heading).first();
-  }
-
-  private get content() {
-    return cy.get(this.selectors.content).first();
-  }
-
-  private get sections() {
-    return cy.get(this.selectors.sections);
+  verifyPageLoaded(): this {
+    cy.url().should('include', '/privacy-policy');
+    return this;
   }
 
   verifyHeading(): this {
-    this.heading.should('be.visible');
+    // Check for privacy policy heading
+    cy.contains('h2', 'Privacy policy', { timeout: 10000 })
+      .should('be.visible');
     return this;
   }
 
   verifyContent(): this {
-    this.content.should('be.visible');
+    // Verify key content exists
+    cy.contains('Privacy Policy').should('exist');
+    cy.contains('personal data').should('exist');
     return this;
   }
 
   verifySections(): this {
-    this.sections.should('have.length.greaterThan', 0);
+    // Verify numbered sections exist
+    cy.contains('What personal data we process').should('be.visible');
     return this;
   }
 
   verifySection(sectionTitle: string): this {
-    cy.contains('h2, h3', sectionTitle).should('be.visible');
+    cy.contains(sectionTitle).should('be.visible');
+    return this;
+  }
+
+  verifyContactInfo(): this {
+    cy.contains('privacy@printful.com').should('exist');
+    return this;
+  }
+
+  verifyRightsSection(): this {
+    cy.contains('Your rights').should('be.visible');
     return this;
   }
 }

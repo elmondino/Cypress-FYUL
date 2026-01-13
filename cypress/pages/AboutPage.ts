@@ -2,32 +2,44 @@ import { BasePage } from './BasePage';
 
 /**
  * AboutPage - Page Object for FYUL.com about page
+ * Uses content-based selectors as site does not use semantic HTML
  */
 export class AboutPage extends BasePage {
   protected readonly path = '/about';
   protected readonly pageTitle = /About|FYUL/i;
 
-  private readonly selectors = {
-    heading: '[data-testid="about-heading"], h1',
-    content: '[data-testid="about-content"], main, article',
-    teamSection: '[data-testid="team-section"], section:has(h2)',
-  };
-
-  private get heading() {
-    return cy.get(this.selectors.heading).first();
-  }
-
-  private get content() {
-    return cy.get(this.selectors.content).first();
+  verifyPageLoaded(): this {
+    cy.url().should('include', '/about');
+    return this;
   }
 
   verifyHeading(): this {
-    this.heading.should('be.visible');
+    // Check for main heading text
+    cy.contains('h2', 'For FYUL to power all eCommerce merchandise', { timeout: 10000 })
+      .should('be.visible');
+    return this;
+  }
+
+  verifyVision(): this {
+    // Check for vision section
+    cy.contains('Our vision').should('be.visible');
     return this;
   }
 
   verifyContent(): this {
-    this.content.should('be.visible');
+    // Verify key content exists on page
+    cy.contains('FYUL').should('be.visible');
+    cy.contains('on-demand').should('exist');
+    return this;
+  }
+
+  verifyHistorySection(): this {
+    cy.contains('Our history').should('be.visible');
+    return this;
+  }
+
+  verifyJoinSection(): this {
+    cy.contains('Join us').should('be.visible');
     return this;
   }
 }

@@ -125,26 +125,3 @@ Cypress.Commands.add('validateSEO', () => {
 
 // Import and register cypress-axe commands
 import 'cypress-axe';
-
-/**
- * Configure axe for better error reporting
- */
-const logA11yViolations = (violations: any[]) => {
-  if (violations.length === 0) {
-    cy.log('✅ No accessibility violations found');
-    return;
-  }
-
-  cy.task('log', `\n${violations.length} accessibility violation(s) detected:\n`);
-  
-  violations.forEach((violation, index) => {
-    const nodes = violation.nodes.map((node: any) => node.target.join(', ')).join('\n  - ');
-    cy.task('log', `
-${index + 1}. ${violation.id} (${violation.impact})
-   Description: ${violation.description}
-   Help: ${violation.helpUrl}
-   Elements:
-  - ${nodes}
-`);
-  });
-};

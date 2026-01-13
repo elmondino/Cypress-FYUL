@@ -72,13 +72,6 @@ Cypress.Commands.add('setupIntercepts', () => {
   intercepts.setupDefaults();
 });
 
-// Add to global types
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      setupIntercepts(): Chainable<void>;
-    }
-  }
-}
+// Type is declared in commands.d.ts
 
 export default intercepts;

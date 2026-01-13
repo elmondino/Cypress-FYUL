@@ -1,82 +1,41 @@
 import { BasePage } from './BasePage';
 
 /**
- * Selectors interface for type safety
- */
-interface HomePageSelectors {
-  hero: string;
-  heroHeading: string;
-  navigation: string;
-  footer: string;
-  brandLinks: string;
-  careersLink: string;
-  leadershipLink: string;
-  aboutLink: string;
-  privacyLink: string;
-}
-
-/**
  * HomePage - Page Object for FYUL.com home page
- * Extends BasePage for common functionality
+ * 
+ * Note: FYUL.com doesn't use semantic HTML (nav, header, footer tags).
+ * Selectors are content-based for reliability.
  */
 export class HomePage extends BasePage {
   protected readonly path = '/';
   protected readonly pageTitle = /FYUL/i;
 
-  /**
-   * Selectors using data-testid first, with robust fallbacks
-   * Avoids :has() selector due to limited browser support
-   */
-  private readonly selectors: HomePageSelectors = {
-    hero: '[data-testid="hero"], main > section:first-child, .hero, #hero',
-    heroHeading: '[data-testid="hero-heading"], h1',
-    navigation: '[data-testid="navigation"], nav, header [role="navigation"], header',
-    footer: '[data-testid="footer"], footer, [role="contentinfo"]',
-    brandLinks: '[data-testid="brand-link"], a[href*="printify.com"], a[href*="printful.com"], a[href*="snowcommerce"]',
-    careersLink: '[data-testid="careers-link"], a[href*="careers"], a[href*="jobs"]',
-    leadershipLink: '[data-testid="leadership-link"], a[href*="leadership"], a[href*="team"]',
-    aboutLink: '[data-testid="about-link"], a[href*="/about"]',
-    privacyLink: '[data-testid="privacy-link"], a[href*="privacy"]',
-  };
-
   // =====================
-  // Element Getters
+  // Element Getters (content-based selectors)
   // =====================
-
-  private get hero() {
-    return cy.get(this.selectors.hero).first();
-  }
 
   private get heroHeading() {
-    return cy.get(this.selectors.heroHeading).first();
-  }
-
-  private get navigation() {
-    return cy.get(this.selectors.navigation).first();
-  }
-
-  private get footer() {
-    return cy.get(this.selectors.footer).first();
+    return cy.get('h1').first();
   }
 
   private get brandLinks() {
-    return cy.get(this.selectors.brandLinks);
+    return cy.get('a[href*="printify.com"], a[href*="printful.com"], a[href*="snowcommerce"]');
   }
 
   private get careersLink() {
-    return cy.get(this.selectors.careersLink).first();
+    return cy.get('a[href*="careers"]').first();
   }
 
   private get leadershipLink() {
-    return cy.get(this.selectors.leadershipLink).first();
+    return cy.get('a[href*="leadership"]').first();
   }
 
   private get aboutLink() {
-    return cy.get(this.selectors.aboutLink).first();
+    return cy.get('a[href*="/about"]').first();
   }
 
   private get privacyLink() {
-    return cy.get(this.selectors.privacyLink).first();
+    return cy.get('a[href*="privacy"]').first();
   }
 
   // =====================
@@ -84,25 +43,27 @@ export class HomePage extends BasePage {
   // =====================
 
   verifyHeroSection(): this {
-    this.hero.should('be.visible');
     this.heroHeading.should('be.visible');
+    cy.contains('h1', /limitless|creativity/i).should('be.visible');
     return this;
   }
 
   verifyNavigation(): this {
-    this.navigation.should('be.visible');
+    // Site doesn't have semantic nav - verify key links exist instead
+    this.aboutLink.should('exist');
+    this.leadershipLink.should('exist');
     return this;
   }
 
   verifyFooter(): this {
-    this.footer.should('be.visible');
-    this.footer.find('a').should('have.length.greaterThan', 0);
+    // Site doesn't have semantic footer - verify footer content exists
+    cy.contains('© 2025 FYUL').should('be.visible');
+    this.privacyLink.should('exist');
     return this;
   }
 
   verifyBrandLinks(brands?: { name: string; urlPattern: RegExp }[]): this {
     if (brands) {
-      // Data-driven approach from fixtures
       brands.forEach(({ name, urlPattern }) => {
         cy.contains('a', name)
           .should('be.visible')
@@ -110,23 +71,18 @@ export class HomePage extends BasePage {
           .and('match', urlPattern);
       });
     } else {
-      // Simple check that brand links exist
       this.brandLinks.should('have.length.greaterThan', 0);
     }
     return this;
   }
 
   verifyCareersLink(): this {
-    this.careersLink
-      .should('be.visible')
-      .and('have.attr', 'href');
+    this.careersLink.should('be.visible').and('have.attr', 'href');
     return this;
   }
 
   verifyLeadershipLink(): this {
-    this.leadershipLink
-      .should('be.visible')
-      .and('have.attr', 'href');
+    this.leadershipLink.should('be.visible').and('have.attr', 'href');
     return this;
   }
 

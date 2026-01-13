@@ -2,38 +2,47 @@ import { BasePage } from './BasePage';
 
 /**
  * LeadershipPage - Page Object for FYUL.com leadership page
+ * Uses content-based selectors as site does not use semantic HTML
  */
 export class LeadershipPage extends BasePage {
   protected readonly path = '/leadership';
   protected readonly pageTitle = /Leadership|FYUL/i;
 
-  private readonly selectors = {
-    heading: '[data-testid="leadership-heading"], h1',
-    leaderCards: '[data-testid="leader-card"], article, .leader, [class*="leader"]',
-    leaderName: '[data-testid="leader-name"], h2, h3',
-    leaderTitle: '[data-testid="leader-title"], p, [class*="title"]',
-  };
-
-  private get heading() {
-    return cy.get(this.selectors.heading).first();
-  }
-
-  private get leaderCards() {
-    return cy.get(this.selectors.leaderCards);
-  }
-
-  verifyHeading(): this {
-    this.heading.should('be.visible');
+  verifyPageLoaded(): this {
+    cy.url().should('include', '/leadership');
     return this;
   }
 
-  verifyLeaderCards(): this {
-    this.leaderCards.should('have.length.greaterThan', 0);
+  verifyHeading(): this {
+    // Check for main heading
+    cy.contains('h1', 'The people guiding FYUL forward', { timeout: 10000 })
+      .should('be.visible');
+    return this;
+  }
+
+  verifyLeaderSection(): this {
+    // Verify leader names are visible
+    cy.contains('Alex Saltonstall').should('be.visible');
     return this;
   }
 
   verifyLeader(name: string): this {
-    cy.contains(this.selectors.leaderName, name).should('be.visible');
+    cy.contains(name).should('be.visible');
+    return this;
+  }
+
+  verifyBoardSection(): this {
+    cy.contains('Meet our board').should('be.visible');
+    return this;
+  }
+
+  verifyCEO(): this {
+    cy.contains('Chief Executive Officer').should('be.visible');
+    return this;
+  }
+
+  verifyJoinSection(): this {
+    cy.contains('Join us').should('be.visible');
     return this;
   }
 }

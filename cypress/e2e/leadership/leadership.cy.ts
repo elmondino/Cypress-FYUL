@@ -15,7 +15,7 @@ describe('Leadership Page', () => {
     leadershipPage.verifyHeading();
   });
 
-  it('should display leader cards', () => {
-    leadershipPage.verifyLeaderCards();
+  it('should display leadership team', () => {
+    leadershipPage.verifyLeaderSection();
   });
 });
