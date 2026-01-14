@@ -9,10 +9,10 @@ Enterprise Cypress testing framework for FYUL.com using TypeScript, Page Object 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         Test Execution                               │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐            │
-│  │  Chrome  │  │ Firefox  │  │   Edge   │  │  Percy   │            │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘            │
-│       └─────────────┴─────────────┴─────────────┘                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                          │
+│  │  Chrome  │  │ Firefox  │  │   Edge   │                          │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘                          │
+│       └─────────────┴─────────────┴───────────────                   │
 │                           │                                          │
 │                    ┌──────▼──────┐                                  │
 │                    │   Cypress   │                                  │
@@ -24,9 +24,9 @@ Enterprise Cypress testing framework for FYUL.com using TypeScript, Page Object 
 │                        Test Layer                                    │
 │  ┌─────────────────────────────────────────────────────────────┐   │
 │  │                    cypress/e2e/                              │   │
-│  │  ┌────────┐ ┌───────┐ ┌────────────┐ ┌─────────┐ ┌────────┐│   │
-│  │  │  home  │ │ about │ │ leadership │ │ privacy │ │ visual ││   │
-│  │  └────────┘ └───────┘ └────────────┘ └─────────┘ └────────┘│   │
+│  │  ┌────────┐ ┌───────┐ ┌────────────┐ ┌─────────┐ │   │
+│  │  │  home  │ │ about │ │ leadership │ │ privacy │ │   │
+│  │  └────────┘ └───────┘ └────────────┘ └─────────┘ │   │
 │  └─────────────────────────────────────────────────────────────┘   │
 └───────────────────────────┬─────────────────────────────────────────┘
                             │
@@ -56,16 +56,16 @@ Enterprise Cypress testing framework for FYUL.com using TypeScript, Page Object 
 │  ┌─────────────────────────────────────────────────────────────┐   │
 │  │                  cypress/support/                            │   │
 │  │                                                              │   │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │   │
-│  │  │ commands.ts  │  │ intercepts.ts│  │  visual.ts   │       │   │
-│  │  │              │  │              │  │              │       │   │
-│  │  │ • waitFor    │  │ • setupDef   │  │ • visual     │       │   │
-│  │  │   PageReady  │  │   aults()    │  │   Snapshot   │       │   │
-│  │  │ • getByTest  │  │ • mockApi()  │  │ • responsive │       │   │
-│  │  │   Id         │  │ • simulate   │  │   Snapshot   │       │   │
-│  │  │ • checkPerf  │  │   Network()  │  │              │       │   │
-│  │  │ • validateSEO│  │              │  │              │       │   │
-│  │  └──────────────┘  └──────────────┘  └──────────────┘       │   │
+│  │  ┌──────────────┐  ┌──────────────┐                       │   │
+│  │  │ commands.ts  │  │ intercepts.ts│                       │   │
+│  │  │              │  │              │                       │   │
+│  │  │ • waitFor    │  │ • setupDef   │                       │   │
+│  │  │   PageReady  │  │   aults()    │                       │   │
+│  │  │ • getByTest  │  │ • mockApi()  │                       │   │
+│  │  │   Id         │  │ • simulate   │                       │   │
+│  │  │ • checkPerf  │  │   Network()  │                       │   │
+│  │  │ • validateSEO│  │              │                       │   │
+│  │  └──────────────┘  └──────────────┘                       │   │
 │  │                                                              │   │
 │  │  ┌──────────────┐                                           │   │
 │  │  │   e2e.ts     │  Global setup: clear cookies, intercepts  │   │
@@ -111,7 +111,7 @@ Enterprise Cypress testing framework for FYUL.com using TypeScript, Page Object 
 │  │                  │  │                  │  │                  │  │
 │  │ • Multi-browser  │  │ • Multi-browser  │  │ • Multi-browser  │  │
 │  │ • Parallel tests │  │ • Artifacts      │  │ • Artifacts      │  │
-│  │ • Percy visual   │  │ • Reports        │  │ • Reports        │  │
+│  │ • Reports        │  │ • Reports        │  │ • Reports        │  │
 │  └──────────────────┘  └──────────────────┘  └──────────────────┘  │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -137,8 +137,7 @@ Cypress/
     │   ├── about/            # About page tests
     │   ├── leadership/       # Leadership page tests
     │   ├── privacy/          # Privacy policy tests
-    │   ├── cross-browser/    # Responsive/viewport tests
-    │   └── visual/           # Percy visual regression tests
+    │   └── cross-browser/    # Responsive/viewport tests
     │
     ├── pages/                # Page Object Model classes
     │   ├── index.ts          # Barrel export
@@ -153,7 +152,6 @@ Cypress/
     │   ├── commands.ts       # Custom Cypress commands
     │   ├── commands.d.ts     # TypeScript definitions
     │   ├── intercepts.ts     # Network mocking utilities
-    │   ├── visual.ts         # Percy integration
     │   └── mochawesome.d.ts  # Reporter types
     │
     └── fixtures/
@@ -227,7 +225,6 @@ npm run test:dev        # Run against localhost
 | `cy.checkPerformance()` | Assert page load metrics |
 | `cy.validateSEO()` | Check meta tags, title, h1 |
 | `cy.injectAxe()` + `cy.checkA11y()` | Accessibility testing |
-| `cy.visualSnapshot(name)` | Percy screenshot |
 | `cy.setupIntercepts()` | Stub analytics/third-party |
 
 ## Test Categories
@@ -236,7 +233,6 @@ npm run test:dev        # Run against localhost
 |----------|----------|---------|
 | Functional | `e2e/home/`, `about/`, etc. | Page functionality |
 | Responsive | `e2e/cross-browser/` | Viewport testing |
-| Visual | `e2e/visual/` | Percy regression |
 | Accessibility | Within functional tests | WCAG compliance |
 | Performance | Within functional tests | Load time metrics |
 | SEO | Within functional tests | Meta tag validation |
@@ -267,9 +263,6 @@ npm run test:mobile      # 375x667
 npm run test:tablet      # 768x1024
 npm run test:desktop     # 1920x1080
 
-# Visual regression
-npm run percy            # Run with Percy
-
 # Quality
 npm run typecheck        # TypeScript validation
 npm run lint             # ESLint check
@@ -282,7 +275,6 @@ npm run clean            # Remove artifacts
 |------------|---------|---------|
 | Cypress | 15.x | Test framework |
 | TypeScript | 5.x | Type safety |
-| Percy | 1.x | Visual regression |
 | cypress-axe | 1.x | Accessibility |
 | Mochawesome | 7.x | HTML reports |
 | ESLint | 8.x | Code quality |

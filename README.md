@@ -19,8 +19,7 @@ cypress/
 │   ├── about/             
 │   ├── leadership/        
 │   ├── privacy/           
-│   ├── cross-browser/     # Responsive tests
-│   └── visual/            # Percy visual tests
+│   └── cross-browser/     # Responsive tests
 ├── pages/                  # Page Objects (TypeScript)
 │   ├── BasePage.ts        # Abstract base class
 │   ├── HomePage.ts        
@@ -30,7 +29,6 @@ cypress/
 ├── support/
 │   ├── commands.ts        # Custom Cypress commands
 │   ├── intercepts.ts      # Network mocking
-│   ├── visual.ts          # Percy integration
 │   └── e2e.ts             # Test setup
 └── fixtures/
     └── testData.json      # Test data
@@ -46,7 +44,6 @@ cypress/
 | `npm run test:firefox` | Run in Firefox |
 | `npm run test:mobile` | Run at mobile viewport |
 | `npm run test:tablet` | Run at tablet viewport |
-| `npm run percy` | Run visual regression tests |
 | `npm run typecheck` | Check TypeScript |
 | `npm run lint` | Lint code |
 
@@ -58,15 +55,6 @@ Run against different environments:
 npm run test:staging    # staging.fyul.com
 npm run test:dev        # localhost:3000
 npm test                # production (default)
-```
-
-## Visual Testing (Percy)
-
-Set your Percy token and run:
-
-```bash
-export PERCY_TOKEN=your_token
-npm run percy
 ```
 
 ## CI/CD
@@ -81,7 +69,6 @@ npm run percy
 - **Page Object Model** - `BasePage` abstract class with common methods
 - **Network Intercepts** - Stubs analytics/third-party scripts for reliability
 - **cypress-axe** - Accessibility testing
-- **Percy** - Visual regression testing
 - **Mochawesome** - HTML test reports
 
 ## Adding Tests

@@ -21,7 +21,7 @@
  * EXECUTION ORDER:
  * ----------------
  * 1. Cypress loads this support file (e2e.ts)
- * 2. All imports execute (commands.ts, intercepts.ts, visual.ts)
+ * 2. All imports execute (commands.ts, intercepts.ts)
  * 3. Global beforeEach() registers (doesn't run yet)
  * 4. Your test file loads
  * 5. Test file's beforeEach() registers
@@ -55,12 +55,6 @@ import './commands';
  * Sets up cy.setupIntercepts() command for stubbing external requests.
  */
 import './intercepts';
-
-/**
- * Import visual testing utilities (Percy integration).
- * Sets up cy.visualSnapshot() command for screenshot comparison.
- */
-import './visual';
 
 /**
  * Import mochawesome reporter for HTML test reports.

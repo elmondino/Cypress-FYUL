@@ -17,7 +17,6 @@
     "test:leadership": "cypress run --spec 'cypress/e2e/leadership/**/*.cy.ts'",
     "test:privacy": "cypress run --spec 'cypress/e2e/privacy/**/*.cy.ts'",
     "test:responsive": "cypress run --spec 'cypress/e2e/cross-browser/**/*.cy.ts'",
-    "test:visual": "cypress run --spec 'cypress/e2e/visual/**/*.cy.ts'",
     "test:a11y": "cypress run --env a11y=true",
     "test:staging": "cross-env CYPRESS_ENV=staging cypress run",
     "test:dev": "cross-env CYPRESS_ENV=development cypress run",
@@ -37,8 +36,7 @@
     "pretest": "npm run clean",
     "ci": "npm run clean && npm run test -- --record",
     "ci:chrome": "npm run test:chrome -- --record",
-    "ci:firefox": "npm run test:firefox -- --record",
-    "percy": "percy exec -- cypress run --spec 'cypress/e2e/visual/**/*.cy.ts'"
+    "ci:firefox": "npm run test:firefox -- --record"
   },
   "keywords": [
     "cypress",
@@ -51,8 +49,6 @@
   "author": "QA Team",
   "license": "MIT",
   "devDependencies": {
-    "@percy/cli": "^1.31.7",
-    "@percy/cypress": "^3.1.7",
     "@types/node": "^25.0.8",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
