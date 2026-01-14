@@ -62,6 +62,12 @@ import './intercepts';
  */
 import './visual';
 
+/**
+ * Import mochawesome reporter for HTML test reports.
+ * This MUST be imported in the support file to enable report generation.
+ */
+import 'cypress-mochawesome-reporter/register';
+
 // ============================================================================
 // GLOBAL HOOKS
 // ============================================================================
