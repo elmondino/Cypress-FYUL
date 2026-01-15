@@ -1,21 +1,43 @@
-import { AboutPage } from '../../pages';
-
 describe('About Page', () => {
-  const aboutPage = new AboutPage();
-
   beforeEach(() => {
-    aboutPage.visit();
+    cy.visit('/about');
+    cy.waitForPageReady();
   });
 
-  it('should load successfully', () => {
-    aboutPage.verifyPageLoaded();
+  describe('Page Load', () => {
+    it('should load successfully', () => {
+      cy.url().should('include', '/about');
+      cy.get('h1, h2').should('exist');
+    });
   });
 
-  it('should display heading', () => {
-    aboutPage.verifyHeading();
+  describe('Core Content', () => {
+    it('should display vision section', () => {
+      cy.contains(/vision|mission/i).should('be.visible');
+    });
+
+    it('should have substantial content', () => {
+      cy.get('body').invoke('text').should('have.length.gt', 500);
+    });
   });
 
-  it('should display content', () => {
-    aboutPage.verifyContent();
+  describe('Company Timeline', () => {
+    it('should display history section', () => {
+      cy.contains(/history|timeline/i).should('be.visible');
+    });
+
+    it('should show key milestone years', () => {
+      // Check for year markers without being specific about all details
+      cy.contains(/201[0-9]|202[0-9]/).should('exist');
+    });
+  });
+
+  describe('Careers CTA', () => {
+    it('should have careers link', () => {
+      cy.get('a[href*="careers"]')
+        .should('be.visible')
+        .and('have.attr', 'href')
+        .and('match', /careers/);
+    });
   });
 });
